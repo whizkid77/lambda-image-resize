@@ -57,12 +57,13 @@ exports.handler = function(event, context) {
         Body: buffer,
         Bucket: BUCKET,
         ContentType: extToType[ext],
+        CacheControl: 'max-age=2592000', //30 days
         Key: key,
         ACL: 'public-read',
       }).promise()
     )
     .then(() => context.succeed({
-        statusCode: '301',
+        statusCode: '307',
         headers: {'location': `${URL}/${key}`},
         body: ''
       })
